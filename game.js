@@ -170,28 +170,74 @@ class BrainSkillTreeGame {
             circle.setAttribute('stroke-width', '2');
         }
 
-        // Lock icon for locked nodes
+        // Icon for node state
         if (!isUnlocked) {
-            const lockIcon = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-            lockIcon.setAttribute('x', node.position.x);
-            lockIcon.setAttribute('y', node.position.y + 8);
-            lockIcon.setAttribute('text-anchor', 'middle');
-            lockIcon.setAttribute('font-size', '24');
-            lockIcon.setAttribute('fill', canUnlock ? '#FFD700' : '#666');
-            lockIcon.setAttribute('class', 'lock-icon');
-            lockIcon.textContent = canUnlock ? '🔓' : '🔒';
-            group.appendChild(lockIcon);
+            if (canUnlock) {
+                // Unlockable - show glow outline
+                const unlockGlow = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                unlockGlow.setAttribute('cx', node.position.x);
+                unlockGlow.setAttribute('cy', node.position.y);
+                unlockGlow.setAttribute('r', 20);
+                unlockGlow.setAttribute('fill', 'none');
+                unlockGlow.setAttribute('stroke', '#FFD700');
+                unlockGlow.setAttribute('stroke-width', '2');
+                unlockGlow.setAttribute('opacity', '0.8');
+                unlockGlow.setAttribute('class', 'unlock-indicator');
+                group.appendChild(unlockGlow);
+
+                // Pulsing dot
+                const dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                dot.setAttribute('cx', node.position.x);
+                dot.setAttribute('cy', node.position.y);
+                dot.setAttribute('r', '4');
+                dot.setAttribute('fill', '#FFD700');
+                dot.setAttribute('filter', 'url(#glow)');
+                group.appendChild(dot);
+            } else {
+                // Locked - show lock SVG icon
+                const lockGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+                lockGroup.setAttribute('class', 'lock-icon');
+
+                // Lock body
+                const lockBody = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+                lockBody.setAttribute('x', node.position.x - 8);
+                lockBody.setAttribute('y', node.position.y - 2);
+                lockBody.setAttribute('width', '16');
+                lockBody.setAttribute('height', '12');
+                lockBody.setAttribute('rx', '2');
+                lockBody.setAttribute('fill', '#555');
+                lockBody.setAttribute('stroke', '#777');
+                lockBody.setAttribute('stroke-width', '1');
+
+                // Lock shackle
+                const lockShackle = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                lockShackle.setAttribute('d', `M ${node.position.x - 6} ${node.position.y - 2}
+                                               v -6
+                                               a 6 6 0 0 1 12 0
+                                               v 6`);
+                lockShackle.setAttribute('fill', 'none');
+                lockShackle.setAttribute('stroke', '#555');
+                lockShackle.setAttribute('stroke-width', '2');
+                lockShackle.setAttribute('stroke-linecap', 'round');
+
+                lockGroup.appendChild(lockShackle);
+                lockGroup.appendChild(lockBody);
+                group.appendChild(lockGroup);
+            }
         } else {
-            // Checkmark for unlocked
-            const checkmark = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-            checkmark.setAttribute('x', node.position.x);
-            checkmark.setAttribute('y', node.position.y + 8);
-            checkmark.setAttribute('text-anchor', 'middle');
-            checkmark.setAttribute('font-size', '24');
-            checkmark.setAttribute('fill', '#fff');
-            checkmark.setAttribute('class', 'checkmark');
-            checkmark.textContent = '✓';
-            group.appendChild(checkmark);
+            // Unlocked - show checkmark
+            const checkPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+            checkPath.setAttribute('d', `M ${node.position.x - 10} ${node.position.y}
+                                         l 4 6
+                                         l 8 -12`);
+            checkPath.setAttribute('fill', 'none');
+            checkPath.setAttribute('stroke', '#fff');
+            checkPath.setAttribute('stroke-width', '3');
+            checkPath.setAttribute('stroke-linecap', 'round');
+            checkPath.setAttribute('stroke-linejoin', 'round');
+            checkPath.setAttribute('class', 'checkmark');
+            checkPath.setAttribute('filter', 'url(#glow)');
+            group.appendChild(checkPath);
         }
 
         // Tier badge
@@ -308,11 +354,11 @@ class BrainSkillTreeGame {
         const statusEl = document.getElementById('skill-status');
 
         if (isUnlocked) {
-            statusEl.innerHTML = '<span class="status-badge unlocked">✓ UNLOCKED</span>';
+            statusEl.innerHTML = '<span class="status-badge unlocked"><span class="badge-icon">✓</span> UNLOCKED</span>';
         } else if (canUnlock) {
-            statusEl.innerHTML = '<span class="status-badge unlockable">🔓 AVAILABLE</span>';
+            statusEl.innerHTML = '<span class="status-badge unlockable"><span class="badge-icon">◈</span> AVAILABLE</span>';
         } else {
-            statusEl.innerHTML = '<span class="status-badge locked">🔒 LOCKED</span>';
+            statusEl.innerHTML = '<span class="status-badge locked"><span class="badge-icon">●</span> LOCKED</span>';
         }
 
         // Functions
@@ -338,8 +384,8 @@ class BrainSkillTreeGame {
 
                 const isMet = this.unlockedNodes.has(prereqId);
                 reqDiv.innerHTML = `
-                    <span class="req-icon">${isMet ? '✓' : '✗'}</span>
-                    <span class="req-name" style="color: ${isMet ? '#8f8' : '#f88'}">${prereqNode.name}</span>
+                    <span class="req-icon ${isMet ? 'met' : 'unmet'}">${isMet ? '✓' : '—'}</span>
+                    <span class="req-name" style="color: ${isMet ? '#64ff64' : '#ff6464'}">${prereqNode.name}</span>
                 `;
                 reqList.appendChild(reqDiv);
             });

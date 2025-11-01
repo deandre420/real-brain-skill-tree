@@ -288,42 +288,42 @@ const gameSkillTree = {
       id: 'first_unlock',
       name: 'Neural Awakening',
       description: 'Unlock your first brain region',
-      icon: '🌟',
+      icon: '★',
       requirement: { type: 'unlock_count', value: 1 }
     },
     {
       id: 'emotional_core',
       name: 'Emotional Intelligence',
       description: 'Unlock the Limbic System',
-      icon: '❤️',
+      icon: '♥',
       requirement: { type: 'unlock_specific', value: 'limbic' }
     },
     {
       id: 'executive_function',
       name: 'Master of Decisions',
       description: 'Unlock the Frontal Lobe',
-      icon: '🧠',
+      icon: '◆',
       requirement: { type: 'unlock_specific', value: 'frontal' }
     },
     {
       id: 'sensory_master',
       name: 'Sensory Master',
       description: 'Unlock all sensory regions',
-      icon: '👁️',
+      icon: '◉',
       requirement: { type: 'unlock_category', value: 'sensory' }
     },
     {
       id: 'full_brain',
       name: 'Neural Mastery',
       description: 'Unlock all brain regions',
-      icon: '🏆',
+      icon: '◈',
       requirement: { type: 'unlock_count', value: 10 }
     },
     {
       id: 'unified_mind',
       name: 'Unified Mind',
       description: 'Unlock the Corpus Callosum',
-      icon: '✨',
+      icon: '✦',
       requirement: { type: 'unlock_specific', value: 'corpus_callosum' }
     }
   ],
