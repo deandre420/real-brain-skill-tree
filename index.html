@@ -16,31 +16,32 @@
         <!-- Top HUD -->
         <div class="top-hud">
             <div class="hud-left">
-                <h1 class="game-title">NEURAL EVOLUTION</h1>
-                <p class="game-subtitle">Unlock the Power of Your Brain</p>
+                <h1 class="game-title">BRAIN TECH TREE</h1>
             </div>
             <div class="hud-center">
-                <div class="stat-display">
-                    <div class="stat-item">
-                        <span class="stat-label">Skill Points</span>
-                        <span class="stat-value" id="skill-points">10</span>
+                <div class="stat-display-icons">
+                    <div class="stat-icon-group" title="Neural Tokens">
+                        <span class="stat-icon tokens">●</span>
+                        <span class="stat-value-large" id="tokens-display">0</span>
                     </div>
-                    <div class="stat-item">
-                        <span class="stat-label">Regions Unlocked</span>
-                        <span class="stat-value" id="regions-unlocked">0/10</span>
+                    <div class="stat-icon-separator"></div>
+                    <div class="stat-icon-group" title="Tokens per second">
+                        <span class="stat-icon rate">◆</span>
+                        <span class="stat-value-medium" id="rate-display">0.0/s</span>
                     </div>
-                    <div class="stat-item">
-                        <span class="stat-label">Brain Power</span>
-                        <span class="stat-value" id="brain-power">0%</span>
+                    <div class="stat-icon-separator"></div>
+                    <div class="stat-icon-group" title="Regions unlocked">
+                        <span class="stat-icon regions">◉</span>
+                        <span class="stat-value-medium" id="regions-display">0/12</span>
                     </div>
                 </div>
             </div>
             <div class="hud-right">
-                <button class="hud-btn" id="reset-btn" title="Reset all skills">
-                    <span class="btn-icon">↺</span> Reset
+                <button class="hud-btn" id="stats-btn" title="View stats">
+                    <span class="btn-icon">▤</span> Stats
                 </button>
-                <button class="hud-btn" id="save-btn" title="Save progress">
-                    <span class="btn-icon">▣</span> Save
+                <button class="hud-btn" id="reset-btn" title="Reset all">
+                    <span class="btn-icon">↺</span> Reset
                 </button>
                 <button class="hud-btn secondary" id="info-btn" title="View educational info">
                     <span class="btn-icon">ⓘ</span> Learn
@@ -102,12 +103,19 @@
             </div>
 
             <div class="panel-content">
-                <div class="skill-status" id="skill-status">
-                    <span class="status-badge locked">🔒 LOCKED</span>
-                </div>
-
                 <div class="skill-description">
                     <p id="skill-desc">Click on a brain region to view details</p>
+                </div>
+
+                <div class="skill-generation" id="skill-generation" style="display:none;">
+                    <div class="generation-stat">
+                        <span class="gen-label">Generates:</span>
+                        <span class="gen-value" id="gen-tokens">+0/s</span>
+                    </div>
+                    <div class="generation-stat">
+                        <span class="gen-label">Click Bonus:</span>
+                        <span class="gen-value" id="gen-click">+0</span>
+                    </div>
                 </div>
 
                 <div class="skill-stats" id="skill-stats">
@@ -147,35 +155,74 @@
         <!-- Notification System -->
         <div class="notification-container" id="notifications"></div>
 
+        <!-- Clicker Button (bottom left) -->
+        <div class="clicker-container">
+            <button class="clicker-btn" id="clicker-btn" title="Click to generate tokens!">
+                <span class="clicker-icon">◉</span>
+                <span class="clicker-label">CLICK</span>
+            </button>
+            <div class="click-power" id="click-power">+1</div>
+        </div>
+
+        <!-- Stats Panel (slides in from left) -->
+        <div class="stats-panel" id="stats-panel">
+            <div class="panel-header">
+                <h2>Production Stats</h2>
+                <button class="close-panel" id="close-stats">×</button>
+            </div>
+            <div class="panel-content">
+                <div class="stats-section">
+                    <h3>Total Generation</h3>
+                    <div class="stat-row">
+                        <span>Tokens/Second:</span>
+                        <span class="stat-highlight" id="total-rate">0.0</span>
+                    </div>
+                    <div class="stat-row">
+                        <span>Click Power:</span>
+                        <span class="stat-highlight" id="total-click">1</span>
+                    </div>
+                    <div class="stat-row">
+                        <span>Total Earned:</span>
+                        <span class="stat-highlight" id="total-earned">0</span>
+                    </div>
+                </div>
+
+                <div class="stats-section">
+                    <h3>Unlocked Regions</h3>
+                    <div id="unlocked-regions-list"></div>
+                </div>
+            </div>
+        </div>
+
         <!-- Welcome Modal -->
         <div class="modal" id="welcome-modal">
             <div class="modal-content">
-                <h2>Welcome to Neural Evolution</h2>
-                <p>Unlock the regions of the human brain and discover their incredible powers.</p>
+                <h2>Brain Tech Tree</h2>
+                <p>Click to generate neural tokens and unlock brain regions to automate your production!</p>
                 <div class="modal-info">
                     <div class="info-item">
-                        <span class="info-icon energy">⚡</span>
+                        <span class="info-icon energy">●</span>
                         <div>
-                            <strong>Skill Points</strong>
-                            <p>Use points to unlock brain regions</p>
+                            <strong>Click for Tokens</strong>
+                            <p>Click the neuron to generate tokens manually</p>
                         </div>
                     </div>
                     <div class="info-item">
-                        <span class="info-icon unlock">◈</span>
+                        <span class="info-icon unlock">◆</span>
                         <div>
-                            <strong>Prerequisites</strong>
-                            <p>Some regions require others to be unlocked first</p>
+                            <strong>Unlock Regions</strong>
+                            <p>Spend tokens to unlock brain regions for passive generation</p>
                         </div>
                     </div>
                     <div class="info-item">
                         <span class="info-icon brain">◉</span>
                         <div>
-                            <strong>Brain Power</strong>
-                            <p>Unlock all regions to reach 100% brain power</p>
+                            <strong>Grow Your Brain</strong>
+                            <p>Each region boosts your production and click power</p>
                         </div>
                     </div>
                 </div>
-                <button class="modal-btn" id="start-btn">Begin Your Journey</button>
+                <button class="modal-btn" id="start-btn">Start Clicking</button>
             </div>
         </div>
 
