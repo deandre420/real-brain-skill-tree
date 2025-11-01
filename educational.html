@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brain Skill Tree - Interactive Human Brain Explorer</title>
+    <link rel="stylesheet" href="educational.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1>Brain Skill Tree</h1>
+            <p class="subtitle">An Interactive Exploration of the Human Brain</p>
+        </header>
+
+        <!-- Controls Panel -->
+        <div class="controls-panel">
+            <div class="control-group">
+                <label for="category-filter">Filter by Category:</label>
+                <select id="category-filter">
+                    <option value="all">All Regions</option>
+                    <option value="cerebral_cortex">Cerebral Cortex</option>
+                    <option value="deep_brain">Deep Brain Structures</option>
+                    <option value="hindbrain">Hindbrain</option>
+                    <option value="white_matter">White Matter</option>
+                </select>
+            </div>
+
+            <div class="control-group">
+                <label for="network-filter">Show Neural Network:</label>
+                <select id="network-filter">
+                    <option value="none">None</option>
+                    <option value="default_mode">Default Mode Network</option>
+                    <option value="executive_control">Executive Control Network</option>
+                    <option value="salience">Salience Network</option>
+                    <option value="motor">Motor Network</option>
+                    <option value="visual">Visual Processing Network</option>
+                </select>
+            </div>
+
+            <div class="control-group">
+                <button id="show-connections-btn" class="btn">Toggle Connections</button>
+                <button id="reset-view-btn" class="btn">Reset View</button>
+            </div>
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="main-content">
+            <!-- Skill Tree Canvas -->
+            <div class="skill-tree-container">
+                <svg id="skill-tree-canvas" width="800" height="600">
+                    <!-- Connections will be drawn here -->
+                    <g id="connections-layer"></g>
+                    <!-- Nodes will be drawn here -->
+                    <g id="nodes-layer"></g>
+                </svg>
+
+                <!-- Legend -->
+                <div class="legend">
+                    <h3>Brain Categories</h3>
+                    <div class="legend-items">
+                        <div class="legend-item">
+                            <span class="legend-color" style="background-color: #FF6B6B;"></span>
+                            <span>Cerebral Cortex</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-color" style="background-color: #FFD93D;"></span>
+                            <span>Deep Brain</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-color" style="background-color: #AA96DA;"></span>
+                            <span>Hindbrain</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-color" style="background-color: #B4F8C8;"></span>
+                            <span>White Matter</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Information Panel -->
+            <div class="info-panel">
+                <div id="welcome-info" class="info-content">
+                    <h2>Welcome to the Brain Skill Tree</h2>
+                    <p>Explore the different regions of the human brain and their functions.</p>
+                    <p><strong>How to use:</strong></p>
+                    <ul>
+                        <li>Click on any brain region to learn more about it</li>
+                        <li>Use the filters to explore different categories</li>
+                        <li>Select neural networks to see how brain regions work together</li>
+                        <li>Toggle connections to visualize how regions communicate</li>
+                    </ul>
+                    <p class="tip">Click on a brain region node to get started!</p>
+                </div>
+
+                <div id="region-info" class="info-content" style="display: none;">
+                    <button id="close-info-btn" class="close-btn">&times;</button>
+                    <h2 id="region-name"></h2>
+                    <p id="region-description"></p>
+
+                    <div class="info-section">
+                        <h3>Primary Functions</h3>
+                        <ul id="region-skills"></ul>
+                    </div>
+
+                    <div class="info-section" id="sub-regions-section" style="display: none;">
+                        <h3>Sub-Regions</h3>
+                        <div id="sub-regions-list"></div>
+                    </div>
+
+                    <div class="info-section" id="connections-section" style="display: none;">
+                        <h3>Connected Regions</h3>
+                        <ul id="connections-list"></ul>
+                    </div>
+
+                    <div class="info-section" id="networks-section" style="display: none;">
+                        <h3>Neural Networks</h3>
+                        <p id="networks-list"></p>
+                    </div>
+                </div>
+
+                <!-- Progress Tracker -->
+                <div class="progress-tracker">
+                    <h3>Exploration Progress</h3>
+                    <div class="progress-bar">
+                        <div id="progress-fill" class="progress-fill"></div>
+                    </div>
+                    <p id="progress-text">0 of 10 regions explored</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Brain Skill Tree - Educational visualization of human brain anatomy and functions</p>
+            <p><a href="BRAIN_REGIONS.md" target="_blank">View detailed documentation</a></p>
+        </footer>
+    </div>
+
+    <!-- Load scripts -->
+    <script src="brainData.js"></script>
+    <script src="educational.js"></script>
+</body>
+</html>

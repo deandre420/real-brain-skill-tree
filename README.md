@@ -1,10 +1,39 @@
 # Brain Skill Tree
 
-An interactive web-based visualization that represents different parts of the human brain as a skill tree. Explore brain regions, their functions, connections, and neural networks through an engaging interface.
+An interactive web-based visualization that represents different parts of the human brain as a skill tree. Available in TWO versions: a game-like progression system and an educational explorer.
+
+## 🎮 Two Versions Available
+
+### 🔥 **Game Version** (index.html) - RECOMMENDED
+A full-page immersive experience with skill point progression, unlock mechanics, and visual effects. Inspired by games like Path of Exile, Satisfactory, and Cities Skylines.
+
+**Features:**
+- ⚡ Skill point system with unlock progression
+- 🔒 Prerequisites and tier-based unlocking
+- ✨ Particle effects and animations
+- 🎯 Achievement system
+- 💾 Save/Load progress
+- 🌟 Full-page dark theme design
+
+**[Launch Game Version](index.html)**
+
+### 📚 **Educational Version** (educational.html)
+A clean, informative interface for learning about brain anatomy without game mechanics.
+
+**Features:**
+- 📖 Comprehensive brain information
+- 🔍 Filtering by categories
+- 🧠 Neural network visualization
+- 📊 Progress tracking
+- 🎨 Light theme with detailed info panels
+
+**[Launch Educational Version](educational.html)**
+
+---
 
 ## Overview
 
-The Brain Skill Tree is an educational tool that helps users understand:
+The Brain Skill Tree helps you understand:
 - Major brain regions and their locations
 - Primary functions of each brain area
 - Sub-regions and specialized structures
@@ -51,6 +80,34 @@ The Brain Skill Tree is an educational tool that helps users understand:
 ### White Matter
 9. **Corpus Callosum** - Communication between brain hemispheres
 
+## Game Version: Progression Mechanics
+
+### Unlock System
+The game version features a full progression system:
+
+**Skill Points**: Start with 10 points to unlock your first brain regions. Each region costs 1-5 points depending on its tier.
+
+**Tiers**: Brain regions are organized in 5 tiers:
+- **Tier 1**: Foundation (Brainstem) - No prerequisites, costs 1 point
+- **Tier 2**: Core Systems (Cerebellum, Limbic System) - Costs 2 points
+- **Tier 3**: Advanced Functions (Frontal, Temporal, Basal Ganglia) - Costs 2-3 points
+- **Tier 4**: Integration (Parietal, Occipital) - Costs 3 points
+- **Tier 5**: Ultimate (Corpus Callosum) - Costs 5 points
+
+**Prerequisites**: Some regions require others to be unlocked first. For example, the Frontal Lobe requires both Cerebellum and Limbic System.
+
+**Visual Effects**: Unlock animations, particle bursts, connection pulses, and achievement notifications create an immersive experience.
+
+**Save System**: Progress is automatically saved to browser local storage. Reset anytime to try different unlock paths.
+
+### Achievements
+- 🌟 **Neural Awakening**: Unlock your first brain region
+- ❤️ **Emotional Intelligence**: Unlock the Limbic System
+- 🧠 **Master of Decisions**: Unlock the Frontal Lobe
+- 👁️ **Sensory Master**: Unlock all sensory regions
+- ✨ **Unified Mind**: Unlock the Corpus Callosum
+- 🏆 **Neural Mastery**: Unlock all brain regions
+
 ## Neural Networks
 
 The application includes visualization of major neural networks:
@@ -65,10 +122,17 @@ The application includes visualization of major neural networks:
 
 ```
 real-brain-skill-tree/
-├── index.html           # Main HTML structure
-├── styles.css           # Styling and visual design
-├── app.js              # Interactive application logic
-├── brainData.js        # Brain regions data structure
+├── index.html           # Game version (main entry point)
+├── styles.css           # Game version styles (dark theme, full-page)
+├── game.js             # Game mechanics (unlock system, progression)
+├── gameData.js         # Game data structure with tiers and costs
+├── particles.js        # Particle effects and animations
+│
+├── educational.html    # Educational version
+├── educational.css     # Educational version styles
+├── educational.js      # Educational version logic
+├── brainData.js        # Educational data structure
+│
 ├── BRAIN_REGIONS.md    # Detailed documentation of brain regions
 └── README.md           # This file
 ```
@@ -116,6 +180,17 @@ Then visit `http://localhost:8000` in your browser.
 
 ## How to Use
 
+### Game Version (index.html)
+1. **Start with Skill Points**: You begin with 10 skill points
+2. **Unlock Regions**: Click on available (glowing) brain regions to view details
+3. **Check Requirements**: Make sure prerequisites are met before unlocking
+4. **Spend Points**: Click "Unlock Region" to spend points and unlock
+5. **Watch Effects**: Enjoy particle effects and animations when unlocking
+6. **Track Progress**: View brain power percentage as you unlock more regions
+7. **Earn Achievements**: Complete objectives to earn achievement badges
+8. **Save Progress**: Your progress auto-saves; use Reset to start over
+
+### Educational Version (educational.html)
 1. **Explore Brain Regions**: Click on any colored circle to learn about that brain region
 2. **Filter by Category**: Use the dropdown to focus on specific brain categories
 3. **View Neural Networks**: Select a network from the dropdown to see how regions work together
